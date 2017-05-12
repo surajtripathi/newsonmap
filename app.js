@@ -14,8 +14,13 @@ app.get("/", function (req, res) {
 
 app.get("/rssfeed", function (req, res) {
 	request('http://www.thehindu.com/news/cities/?service=rss', function (error, response, body) {
-	  var json_data = parser.toJson(body);
-	  res.json(JSON.parse(json_data));
+		var json_data
+		if(!error) {
+	  		var json_data = parser.toJson(body);
+	  		res.json(JSON.parse(json_data));
+		} else {
+			res.json({error: error});
+		}
 	});
 });
 
